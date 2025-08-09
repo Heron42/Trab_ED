@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 struct celula{
-    void* dado;
+    Arv* dado;
     cel* prox;
 };
 
@@ -44,7 +44,8 @@ Lista* retiraLista(Lista* l){
             free(p);
         }
         else{
-            l->prim = l->prim->prox->prox;
+            l->prim = l->prim->prox;
+            l->prim = l->prim->prox;
             free(p->prox);
             free(p);
         }
@@ -53,11 +54,11 @@ Lista* retiraLista(Lista* l){
     return l;
 }
 
-void* retornaDadoListaPorIndice(Lista* l, int i){
+Arv* retornaDadoListaPorIndice(Lista* l, int i){
     int j = 1;
     for(cel* p = l->prim;p != NULL;p = p->prox){
         if(j == i){
-            return p;
+            return p->dado;
         }
         j++;
     }

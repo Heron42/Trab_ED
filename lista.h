@@ -1,6 +1,8 @@
 #ifndef _LISTA_H
 #define _LISTA_H
 
+#include "arvore.h"
+
 typedef struct lista Lista;
 typedef struct celula cel;
 
@@ -10,7 +12,7 @@ Lista* insereLista(Lista* l, void* dado);
 
 Lista* retiraLista(Lista* l);
 
-void* retornaDadoListaPorIndice(Lista* l, int i);
+Arv* retornaDadoListaPorIndice(Lista* l, int i);
 
 int retornaUnicoElemento(Lista* l);
 

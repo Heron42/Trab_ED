@@ -24,6 +24,9 @@ Arv* criaArvNula(){
 }
 
 int ehFolha(Arv* r){
+    if(r == NULL){
+        return 0;
+    }
     return (r->sae == NULL && r->sad == NULL);
 }
 
@@ -52,11 +55,11 @@ void imprimeArvore(Arv* r, FILE* arq){
         if(r->sae == NULL && r->sad == NULL){
             fprintf(arq, "1 ");
             fprintf(arq, "%c\n", r->dado);
-            imprimeArvore(r->sae, arq);
-            imprimeArvore(r->sad, arq);
         }
         else{
             fprintf(arq, "0\n");
+            imprimeArvore(r->sae, arq);
+            imprimeArvore(r->sad, arq);
         }
     }
 }

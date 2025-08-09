@@ -9,8 +9,11 @@
 void geraCodigos(Arv* arv, char* string, char* codigos[]);
 
 int main(int argc, char *argv[]){
-    char* nomearquivo;
-    strcpy(nomearquivo, argv[1]);
+    if(argc != 2){
+        printf("Execução incorreta\n");
+        exit(1);
+    }
+    char* nomearquivo = strdup(argv[1]);
     FILE* arquivo = fopen(nomearquivo, "rb");   // Abre arquivo de leitura
     if(arquivo == NULL){
         printf("Erro ao abrir arquivo a ser compactado\n");
@@ -36,6 +39,10 @@ int main(int argc, char *argv[]){
         if(peso[i] > maior){
             maior = peso[i];
         }
+    }
+    if(maior == 0){
+        printf("Arquivo vazio\n");
+        return 0;
     }
 
     int menor;
@@ -70,8 +77,6 @@ int main(int argc, char *argv[]){
     }
     Arv* huff = retornaDadoListaPorIndice(lista, 1);
 
-    liberaLista(lista);
-
     char* codigos[256] = {0};
 
     geraCodigos(huff, "", codigos);
@@ -79,7 +84,7 @@ int main(int argc, char *argv[]){
     bitmap* bm = bitmapInit(8*tamanho);
 
     for(int i = 0;i<tamanho;i++){
-        unsigned char byte = buffer[i];
+        int byte = buffer[i];
         char* codigo = codigos[byte];
         for(int j = 0;codigo[j] != '\0';j++){
             bitmapAppendLeastSignificantBit(bm, codigo[j] - '0');
@@ -97,6 +102,7 @@ int main(int argc, char *argv[]){
 
     fwrite(bitmapGetContents(bm), 1, (bitmapGetLength(bm) + 7)/8, saida);
     fclose(saida);
+    liberaLista(lista);
 
     return 0;
 }
